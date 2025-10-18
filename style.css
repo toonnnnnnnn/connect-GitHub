@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #74b9ff 100%);
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #74b9ff 100%) !important;
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -117,30 +117,30 @@ header {
     padding: 20px;
     background: rgba(255, 255, 255, 0.7);
     border-radius: 15px;
-    border: 2px dashed #ff6b9d;
+    border: 2px dashed #74b9ff;
 }
 
 .upload-section h3 {
     font-family: 'Dancing Script', cursive;
     font-size: 1.8rem;
-    color: #d63384;
+    color: #2d3436;
     margin-bottom: 20px;
     text-align: center;
 }
 
 .upload-area {
-    border: 2px dashed #ff6b9d;
+    border: 2px dashed #74b9ff;
     border-radius: 15px;
     padding: 30px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: rgba(255, 107, 157, 0.05);
+    background: rgba(116, 185, 255, 0.05);
 }
 
 .upload-area:hover {
-    background: rgba(255, 107, 157, 0.1);
-    border-color: #ff8fab;
+    background: rgba(116, 185, 255, 0.1);
+    border-color: #0984e3;
     transform: translateY(-2px);
 }
 
@@ -159,7 +159,7 @@ header {
 .upload-text {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #d63384;
+    color: #2d3436;
     margin: 0;
 }
 
@@ -185,7 +185,7 @@ header {
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+    background: linear-gradient(45deg, #74b9ff, #0984e3);
     border-radius: 4px;
     width: 0%;
     transition: width 0.3s ease;
@@ -194,7 +194,7 @@ header {
 
 .progress-text {
     font-size: 0.9rem;
-    color: #d63384;
+    color: #2d3436;
     font-weight: 500;
     margin: 0;
 }
@@ -294,6 +294,8 @@ header {
     height: 150px;
     margin: 0 auto 20px;
     animation: float 3s ease-in-out infinite;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
 }
 
 .small-flower {
@@ -314,9 +316,10 @@ header {
     position: absolute;
     width: 8px;
     height: 8px;
-    background: linear-gradient(45deg, #74b9ff, #a29bfe);
+    background: linear-gradient(45deg, #74b9ff, #a29bfe) !important;
     border-radius: 50%;
     animation: miniPetalFloat 2s ease-in-out infinite;
+    box-shadow: 0 0 5px rgba(116, 185, 255, 0.5);
 }
 
 .mp-1 { top: 2px; left: 6px; animation-delay: 0s; }
