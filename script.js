@@ -188,8 +188,11 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Initialize page with welcome message
+// Initialize page with welcome message and load saved photo
 document.addEventListener('DOMContentLoaded', function() {
+    // Load saved photo from localStorage
+    loadSavedPhoto();
+    
     // Add a subtle welcome animation
     setTimeout(() => {
         const welcomeMessage = document.createElement('div');
@@ -214,6 +217,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     }, 2000);
 });
+
+function loadSavedPhoto() {
+    const savedPhoto = localStorage.getItem('formPhoto');
+    const formPhoto = document.getElementById('formPhoto');
+    const photoPlaceholder = document.getElementById('photoPlaceholder');
+    
+    if (savedPhoto) {
+        formPhoto.src = savedPhoto;
+        formPhoto.style.display = 'block';
+        photoPlaceholder.style.display = 'none';
+    } else {
+        formPhoto.style.display = 'none';
+        photoPlaceholder.style.display = 'flex';
+    }
+}
 
 // Add smooth scrolling for better UX
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -315,6 +333,9 @@ document.addEventListener('DOMContentLoaded', function() {
             clearInterval(progressInterval);
             progressFill.style.width = '100%';
             progressText.textContent = 'Upload complete! 🎉';
+            
+            // Save to localStorage
+            localStorage.setItem('formPhoto', e.target.result);
             
             // Update the photo
             formPhoto.src = e.target.result;
