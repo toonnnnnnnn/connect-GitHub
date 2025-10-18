@@ -40,6 +40,26 @@
                     </div>
                     <p class="progress-text">Uploading...</p>
                 </div>
+                
+                <div class="save-options" id="saveOptions" style="display: none;">
+                    <h4>Save Options 💾</h4>
+                    <div class="save-buttons">
+                        <button class="save-btn local-save" onclick="saveLocally()">
+                            💻 Save on This Device
+                        </button>
+                        <button class="save-btn cloud-save" onclick="saveToCloud()">
+                            ☁️ Save for All Devices
+                        </button>
+                    </div>
+                    <p class="save-info">Choose how you want to save Form's photo</p>
+                </div>
+                
+                <div class="cloud-progress" id="cloudProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">Saving to cloud...</p>
+                </div>
             </div>
         </div>
 

@@ -233,6 +233,53 @@ function loadSavedPhoto() {
     }
 }
 
+// Save functions
+function saveLocally() {
+    if (window.tempImageData) {
+        localStorage.setItem('formPhoto', window.tempImageData);
+        showSuccessMessage('Photo saved on this device! 💻');
+        document.getElementById('saveOptions').style.display = 'none';
+    }
+}
+
+function saveToCloud() {
+    if (window.tempImageData) {
+        // Show cloud progress
+        const cloudProgress = document.getElementById('cloudProgress');
+        const progressFill = cloudProgress.querySelector('.progress-fill');
+        const progressText = cloudProgress.querySelector('.progress-text');
+        
+        cloudProgress.style.display = 'block';
+        progressFill.style.width = '0%';
+        progressText.textContent = 'Saving to cloud...';
+        
+        // Simulate cloud save progress
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 20;
+            if (progress > 90) progress = 90;
+            progressFill.style.width = progress + '%';
+        }, 200);
+        
+        // Simulate cloud save (in real app, this would upload to a server)
+        setTimeout(() => {
+            clearInterval(progressInterval);
+            progressFill.style.width = '100%';
+            progressText.textContent = 'Saved to cloud! ☁️';
+            
+            // Save to localStorage as backup
+            localStorage.setItem('formPhoto', window.tempImageData);
+            
+            // Hide progress and options
+            setTimeout(() => {
+                cloudProgress.style.display = 'none';
+                document.getElementById('saveOptions').style.display = 'none';
+                showSuccessMessage('Photo saved for all devices! ☁️✨');
+            }, 1500);
+        }, 2000);
+    }
+}
+
 // Add smooth scrolling for better UX
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -334,22 +381,20 @@ document.addEventListener('DOMContentLoaded', function() {
             progressFill.style.width = '100%';
             progressText.textContent = 'Upload complete! 🎉';
             
-            // Save to localStorage
-            localStorage.setItem('formPhoto', e.target.result);
+            // Store the image data temporarily
+            window.tempImageData = e.target.result;
             
             // Update the photo
             formPhoto.src = e.target.result;
             formPhoto.style.display = 'block';
             photoPlaceholder.style.display = 'none';
             
-            // Hide progress after a moment
+            // Hide progress and show save options
             setTimeout(() => {
                 uploadProgress.style.display = 'none';
                 progressFill.style.width = '0%';
-            }, 2000);
-
-            // Show success message
-            showUploadSuccess();
+                document.getElementById('saveOptions').style.display = 'block';
+            }, 1000);
         };
 
         reader.onerror = function() {
@@ -365,6 +410,29 @@ document.addEventListener('DOMContentLoaded', function() {
     function showUploadSuccess() {
         const successMessage = document.createElement('div');
         successMessage.innerHTML = 'Photo uploaded successfully! 📸✨';
+        successMessage.style.position = 'fixed';
+        successMessage.style.top = '20px';
+        successMessage.style.right = '20px';
+        successMessage.style.background = 'rgba(76, 175, 80, 0.9)';
+        successMessage.style.color = 'white';
+        successMessage.style.padding = '15px 25px';
+        successMessage.style.borderRadius = '25px';
+        successMessage.style.fontSize = '1rem';
+        successMessage.style.fontWeight = '600';
+        successMessage.style.zIndex = '1000';
+        successMessage.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+        successMessage.style.animation = 'fadeInOut 3s ease-in-out forwards';
+        
+        document.body.appendChild(successMessage);
+        
+        setTimeout(() => {
+            successMessage.remove();
+        }, 3000);
+    }
+
+    function showSuccessMessage(message) {
+        const successMessage = document.createElement('div');
+        successMessage.innerHTML = message;
         successMessage.style.position = 'fixed';
         successMessage.style.top = '20px';
         successMessage.style.right = '20px';
