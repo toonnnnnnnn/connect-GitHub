@@ -38,6 +38,55 @@ header {
     animation: fadeInUp 1s ease-out 0.3s both;
 }
 
+.form-photo-section {
+    margin: 40px 0;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.photo-container {
+    position: relative;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+.form-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.form-photo:hover {
+    transform: scale(1.05);
+}
+
+.photo-frame {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 3px solid #ff6b9d;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: rotate 10s linear infinite;
+}
+
+.photo-caption {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+    margin-top: 15px;
+    font-style: italic;
+}
+
 .flower-section {
     margin: 60px 0;
     padding: 40px;
@@ -305,6 +354,15 @@ footer {
     }
 }
 
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
         transform: translateY(0);
@@ -359,4 +417,14 @@ footer {
     .petal-4 { transform: rotate(180deg) translateY(-45px); }
     .petal-5 { transform: rotate(240deg) translateY(-45px); }
     .petal-6 { transform: rotate(300deg) translateY(-45px); }
+    
+    .form-photo {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .form-photo-section {
+        padding: 20px;
+        margin: 30px 0;
+    }
 }
