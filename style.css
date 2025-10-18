@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #74b9ff 100%);
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -25,7 +25,7 @@ header {
 .main-title {
     font-family: 'Dancing Script', cursive;
     font-size: 3.5rem;
-    color: #d63384;
+    color: #2d3436;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     animation: fadeInDown 1s ease-out;
@@ -288,42 +288,41 @@ header {
     margin: 30px 0;
 }
 
-.flower {
+.hydrangea {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     margin: 0 auto 20px;
     animation: float 3s ease-in-out infinite;
 }
 
-.petal {
+.small-flower {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(45deg, #ff6b9d, #ff8fab);
-    border-radius: 50% 0 50% 0;
-    transform-origin: center;
-    animation: petalRotate 4s ease-in-out infinite;
+    width: 20px;
+    height: 20px;
 }
 
-.petal-1 { transform: rotate(0deg) translateY(-50px); animation-delay: 0s; }
-.petal-2 { transform: rotate(60deg) translateY(-50px); animation-delay: 0.5s; }
-.petal-3 { transform: rotate(120deg) translateY(-50px); animation-delay: 1s; }
-.petal-4 { transform: rotate(180deg) translateY(-50px); animation-delay: 1.5s; }
-.petal-5 { transform: rotate(240deg) translateY(-50px); animation-delay: 2s; }
-.petal-6 { transform: rotate(300deg) translateY(-50px); animation-delay: 2.5s; }
+.sf-1 { top: 20px; left: 65px; }
+.sf-2 { top: 40px; left: 40px; }
+.sf-3 { top: 40px; left: 90px; }
+.sf-4 { top: 60px; left: 30px; }
+.sf-5 { top: 60px; left: 100px; }
+.sf-6 { top: 80px; left: 50px; }
+.sf-7 { top: 80px; left: 80px; }
 
-.center {
+.mini-petal {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 30px;
-    height: 30px;
-    background: linear-gradient(45deg, #ffd700, #ffed4e);
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(45deg, #74b9ff, #a29bfe);
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    animation: miniPetalFloat 2s ease-in-out infinite;
 }
+
+.mp-1 { top: 2px; left: 6px; animation-delay: 0s; }
+.mp-2 { top: 6px; left: 2px; animation-delay: 0.2s; }
+.mp-3 { top: 10px; left: 6px; animation-delay: 0.4s; }
+.mp-4 { top: 6px; left: 10px; animation-delay: 0.6s; }
 
 .stem {
     width: 8px;
@@ -355,7 +354,7 @@ header {
 }
 
 .give-flower-btn {
-    background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+    background: linear-gradient(45deg, #74b9ff, #0984e3);
     color: white;
     border: none;
     padding: 15px 30px;
@@ -363,13 +362,13 @@ header {
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 5px 15px rgba(116, 185, 255, 0.3);
     font-weight: 600;
 }
 
 .give-flower-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+    box-shadow: 0 8px 25px rgba(116, 185, 255, 0.4);
 }
 
 .motivation-section {
@@ -384,12 +383,12 @@ header {
 .motivation-section h2 {
     font-family: 'Dancing Script', cursive;
     font-size: 2.5rem;
-    color: #d63384;
+    color: #2d3436;
     margin-bottom: 30px;
 }
 
 .motivation-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
     color: white;
     padding: 30px;
     border-radius: 15px;
@@ -436,7 +435,7 @@ header {
 .study-encouragement h2 {
     font-family: 'Dancing Script', cursive;
     font-size: 2.5rem;
-    color: #d63384;
+    color: #2d3436;
     margin-bottom: 30px;
 }
 
@@ -448,12 +447,12 @@ header {
 }
 
 .tip {
-    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%);
     padding: 20px;
     border-radius: 15px;
     font-size: 1.1rem;
     font-weight: 500;
-    color: #333;
+    color: white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
 }
@@ -465,7 +464,7 @@ header {
 .love-message {
     margin: 60px 0;
     padding: 40px;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%);
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     animation: fadeInUp 1s ease-out 1.5s both;
@@ -474,14 +473,14 @@ header {
 .love-message h3 {
     font-family: 'Dancing Script', cursive;
     font-size: 2.2rem;
-    color: #d63384;
+    color: white;
     margin-bottom: 20px;
 }
 
 .love-message p {
     font-size: 1.2rem;
     line-height: 1.6;
-    color: #333;
+    color: white;
     font-weight: 400;
 }
 
@@ -494,7 +493,7 @@ footer {
 .signature {
     font-family: 'Dancing Script', cursive;
     font-size: 1.8rem;
-    color: #d63384;
+    color: #2d3436;
     font-weight: 600;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
@@ -531,12 +530,14 @@ footer {
     }
 }
 
-@keyframes petalRotate {
+@keyframes miniPetalFloat {
     0%, 100% {
-        transform: rotate(0deg) translateY(-50px);
+        transform: translateY(0px) scale(1);
+        opacity: 0.8;
     }
     50% {
-        transform: rotate(5deg) translateY(-50px);
+        transform: translateY(-2px) scale(1.1);
+        opacity: 1;
     }
 }
 
@@ -561,7 +562,7 @@ footer {
     }
 }
 
-.flower.animate {
+.hydrangea.animate {
     animation: bounce 0.6s ease;
 }
 
@@ -587,22 +588,20 @@ footer {
         grid-template-columns: 1fr;
     }
     
-    .flower {
-        width: 100px;
-        height: 100px;
+    .hydrangea {
+        width: 120px;
+        height: 120px;
     }
     
-    .petal {
-        width: 35px;
-        height: 35px;
+    .small-flower {
+        width: 15px;
+        height: 15px;
     }
     
-    .petal-1 { transform: rotate(0deg) translateY(-45px); }
-    .petal-2 { transform: rotate(60deg) translateY(-45px); }
-    .petal-3 { transform: rotate(120deg) translateY(-45px); }
-    .petal-4 { transform: rotate(180deg) translateY(-45px); }
-    .petal-5 { transform: rotate(240deg) translateY(-45px); }
-    .petal-6 { transform: rotate(300deg) translateY(-45px); }
+    .mini-petal {
+        width: 6px;
+        height: 6px;
+    }
     
     .form-photo {
         width: 150px;
