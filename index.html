@@ -16,7 +16,10 @@
 
         <div class="form-photo-section">
             <div class="photo-container">
-                <img src="form-photo.jpg" alt="Form" class="form-photo">
+                <img src="form-photo.jpg" alt="Form" class="form-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    <span class="placeholder-text">Form</span>
+                </div>
                 <div class="photo-frame"></div>
             </div>
             <p class="photo-caption">Here's Form! Ready to study and achieve great things! 💪</p>
