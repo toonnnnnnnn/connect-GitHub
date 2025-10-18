@@ -240,3 +240,127 @@ function addSpecialSurprise() {
     // This could be expanded with more interactive features
     console.log('💕 Special surprise for Form! 💕');
 }
+
+// Photo upload functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const photoUpload = document.getElementById('photoUpload');
+    const formPhoto = document.getElementById('formPhoto');
+    const photoPlaceholder = document.getElementById('photoPlaceholder');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const progressFill = document.querySelector('.progress-fill');
+    const progressText = document.querySelector('.progress-text');
+
+    // Click to upload
+    uploadArea.addEventListener('click', function() {
+        photoUpload.click();
+    });
+
+    // Drag and drop functionality
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.style.background = 'rgba(255, 107, 157, 0.15)';
+        uploadArea.style.borderColor = '#ff8fab';
+    });
+
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        uploadArea.style.background = 'rgba(255, 107, 157, 0.05)';
+        uploadArea.style.borderColor = '#ff6b9d';
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.style.background = 'rgba(255, 107, 157, 0.05)';
+        uploadArea.style.borderColor = '#ff6b9d';
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileUpload(files[0]);
+        }
+    });
+
+    // File input change
+    photoUpload.addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+            handleFileUpload(e.target.files[0]);
+        }
+    });
+
+    function handleFileUpload(file) {
+        // Check if it's an image
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file! 📸');
+            return;
+        }
+
+        // Show progress
+        uploadProgress.style.display = 'block';
+        progressFill.style.width = '0%';
+        progressText.textContent = 'Uploading...';
+
+        // Simulate upload progress
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 30;
+            if (progress > 90) progress = 90;
+            progressFill.style.width = progress + '%';
+        }, 200);
+
+        // Create FileReader to read the image
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            // Complete progress
+            clearInterval(progressInterval);
+            progressFill.style.width = '100%';
+            progressText.textContent = 'Upload complete! 🎉';
+            
+            // Update the photo
+            formPhoto.src = e.target.result;
+            formPhoto.style.display = 'block';
+            photoPlaceholder.style.display = 'none';
+            
+            // Hide progress after a moment
+            setTimeout(() => {
+                uploadProgress.style.display = 'none';
+                progressFill.style.width = '0%';
+            }, 2000);
+
+            // Show success message
+            showUploadSuccess();
+        };
+
+        reader.onerror = function() {
+            clearInterval(progressInterval);
+            uploadProgress.style.display = 'none';
+            alert('Error uploading image. Please try again! 😔');
+        };
+
+        // Start reading the file
+        reader.readAsDataURL(file);
+    }
+
+    function showUploadSuccess() {
+        const successMessage = document.createElement('div');
+        successMessage.innerHTML = 'Photo uploaded successfully! 📸✨';
+        successMessage.style.position = 'fixed';
+        successMessage.style.top = '20px';
+        successMessage.style.right = '20px';
+        successMessage.style.background = 'rgba(76, 175, 80, 0.9)';
+        successMessage.style.color = 'white';
+        successMessage.style.padding = '15px 25px';
+        successMessage.style.borderRadius = '25px';
+        successMessage.style.fontSize = '1rem';
+        successMessage.style.fontWeight = '600';
+        successMessage.style.zIndex = '1000';
+        successMessage.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+        successMessage.style.animation = 'fadeInOut 3s ease-in-out forwards';
+        
+        document.body.appendChild(successMessage);
+        
+        setTimeout(() => {
+            successMessage.remove();
+        }, 3000);
+    }
+});

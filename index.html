@@ -16,13 +16,31 @@
 
         <div class="form-photo-section">
             <div class="photo-container">
-                <img src="form-photo.jpg" alt="Form" class="form-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="photo-placeholder" style="display: none;">
+                <img src="form-photo.jpg" alt="Form" class="form-photo" id="formPhoto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" id="photoPlaceholder" style="display: none;">
                     <span class="placeholder-text">Form</span>
                 </div>
                 <div class="photo-frame"></div>
             </div>
             <p class="photo-caption">Here's Form! Ready to study and achieve great things! 💪</p>
+            
+            <div class="upload-section">
+                <h3>Upload Form's Photo 📸</h3>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">📷</div>
+                        <p class="upload-text">Click to upload Form's photo</p>
+                        <p class="upload-subtext">or drag and drop here</p>
+                    </div>
+                    <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                </div>
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">Uploading...</p>
+                </div>
+            </div>
         </div>
 
         <div class="flower-section">
