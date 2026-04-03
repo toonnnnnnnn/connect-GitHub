@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Tonnam 🌸</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       ROOT COLORS — edit these to change the theme
+    ============================================= */
+    :root {
+      --pink-light:   #fff0f4;
+      --pink-mid:     #ffd6e0;
+      --pink-accent:  #f4a0b5;
+      --pink-deep:    #e07090;
+      --text-dark:    #4a2030;
+      --text-soft:    #8a4060;
+      --white:        #ffffff;
+    }
+
+    /* =============================================
+       BASE
+    ============================================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--pink-light);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* Floating hearts background canvas */
+    #hearts-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(160deg, #ffe4ec 0%, #ffd6e0 50%, #ffecf3 100%);
+      z-index: 1;
+    }
+
+    .hero-emoji {
+      font-size: 3rem;
+      animation: float 3s ease-in-out infinite;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-subtitle {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--pink-deep);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.3s;
+    }
+
+    .hero-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(2.4rem, 8vw, 4rem);
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.2;
+      margin: 0.5rem 0 1rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.6s;
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+      color: var(--text-soft);
+      max-width: 320px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.9s;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--pink-deep);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 2s, pulse 2s ease-in-out infinite 3s;
+    }
+
+    /* =============================================
+       SECTION WRAPPER
+    ============================================= */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 1.5rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--pink-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Lora', serif;
+      font-size: 1.6rem;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Divider */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--pink-accent), var(--pink-deep));
+      border-radius: 99px;
+      margin: 0 auto 2.5rem;
+    }
+
+    /* =============================================
+       LOVE LETTER
+    ============================================= */
+    .letter-section {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2rem 1.75rem;
+      box-shadow: 0 8px 32px rgba(224, 112, 144, 0.12);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .letter-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter-intro {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--pink-deep);
+      margin-bottom: 1.25rem;
+    }
+
+    .letter-body p {
+      font-size: 0.97rem;
+      line-height: 1.85;
+      color: var(--text-soft);
+      margin-bottom: 1rem;
+    }
+
+    .letter-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .letter-sign {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--pink-deep);
+      margin-top: 1.5rem;
+      text-align: right;
+    }
+
+    /* =============================================
+       COUNTDOWN
+    ============================================= */
+    .countdown-section {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .countdown-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .countdown-box {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 1rem 0.5rem;
+      box-shadow: 0 4px 16px rgba(224, 112, 144, 0.1);
+    }
+
+    .countdown-number {
+      font-family: 'Lora', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--pink-deep);
+      line-height: 1;
+    }
+
+    .countdown-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-top: 0.3rem;
+    }
+
+    .countdown-message {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-top: 1.25rem;
+    }
+
+    /* =============================================
+       TIME ZONES
+    ============================================= */
+    .timezone-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .timezone-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timezone-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .tz-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(224, 112, 144, 0.1);
+    }
+
+    .tz-flag {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .tz-city {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink-accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .tz-time {
+      font-family: 'Lora', serif;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .tz-date {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      margin-top: 0.25rem;
+    }
+
+    .tz-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--pink-accent);
+      padding-top: 1rem;
+    }
+
+    /* =============================================
+       PHOTO GALLERY
+    ============================================= */
+    .gallery-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .gallery-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    /* Polaroid style */
+    .polaroid {
+      background: var(--white);
+      border-radius: 4px;
+      padding: 0.6rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      transform: rotate(-1.5deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .polaroid:nth-child(even) {
+      transform: rotate(1.5deg);
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.04);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    .polaroid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+      background: var(--pink-mid);
+    }
+
+    .polaroid-caption {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      text-align: center;
+      margin-top: 0.5rem;
+      padding: 0 0.2rem;
+    }
+
+    /* =============================================
+       SURPRISE BUTTON
+    ============================================= */
+    .surprise-section {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .surprise-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .surprise-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--pink-accent), var(--pink-deep));
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      padding: 1rem 2.2rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(224, 112, 144, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.03em;
+    }
+
+    .surprise-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 10px 28px rgba(224, 112, 144, 0.5);
+    }
+
+    .surprise-btn:active {
+      transform: scale(0.97);
+    }
+
+    .surprise-message {
+      display: none;
+      margin-top: 1.5rem;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 1.75rem 1.5rem;
+      box-shadow: 0 8px 32px rgba(224, 112, 144, 0.15);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .surprise-message.open {
+      display: block;
+    }
+
+    .surprise-heart {
+      font-size: 2.5rem;
+      animation: heartbeat 1.2s ease-in-out infinite;
+      margin-bottom: 0.75rem;
+    }
+
+    .surprise-text {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+    }
+
+    /* =============================================
+       AUDIO SECTION
+    ============================================= */
+    .audio-section {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .audio-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .audio-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(224, 112, 144, 0.1);
+    }
+
+    .audio-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .audio-hint {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Styled audio player */
+    audio {
+      width: 100%;
+      border-radius: 50px;
+      accent-color: var(--pink-deep);
+      outline: none;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2.5rem 1.5rem 3rem;
+    }
+
+    .footer-heart {
+      font-size: 2rem;
+      animation: heartbeat 1.2s ease-in-out infinite;
+    }
+
+    .footer-text {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-top: 0.75rem;
+    }
+
+    /* =============================================
+       ANIMATIONS
+    ============================================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0);    }
+      50%       { transform: translateY(-8px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1;   }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1);    }
+      14%       { transform: scale(1.15); }
+      28%       { transform: scale(1);    }
+      42%       { transform: scale(1.1);  }
+      70%       { transform: scale(1);    }
+    }
+
+    /* =============================================
+       RESPONSIVE TWEAKS
+    ============================================= */
+    @media (max-width: 360px) {
+      .countdown-number { font-size: 1.6rem; }
+      .tz-time           { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating hearts canvas -->
+<canvas id="hearts-canvas"></canvas>
+
+<!-- =============================================
+     HERO
+============================================= -->
+<section class="hero">
+  <div class="hero-emoji">🌸</div>
+  <p class="hero-subtitle">A little something for you</p>
+  <h1 class="hero-title">Hey, Tonnam 💕</h1>
+  <p class="hero-tagline">Before you fly off and change the world, I wanted you to have this.</p>
+  <span class="scroll-hint">scroll down ↓</span>
+</section>
+
+
+<!-- =============================================
+     LOVE LETTER
+============================================= -->
+<div class="section reveal">
+  <p class="section-label">From my heart to yours</p>
+  <h2 class="section-title">A love letter ✉️</h2>
+
+  <div class="letter-section reveal">
+    <p class="letter-intro">My dearest Tonnam,</p>
+
+    <div class="letter-body">
+
+      <p>
+        Every single day I spend with you, I feel so happy — happier than I know how to say.
+        And every day, without even trying, <em>I like you more.</em>
+      </p>
+
+      <p>
+        Today you're flying, and honestly? My heart dropped a little when I watched you go.
+        Okay — more than a little. But I need you to know that every bit of that feeling
+        comes from how much I love having you around.
+      </p>
+
+      <p>
+        Please travel safely, my smart, brave Bee. 🐝<br />
+        No matter how far the distance between us gets, I am always right here with you.
+        That will never change.
+      </p>
+
+      <p>
+        If you ever feel tired, or overwhelmed, or just a little homesick —
+        please don't hold it in. Call me. Tell me. I mean it, any time, any reason.
+        <em>You will always, always have me.</em>
+      </p>
+
+      <p>
+        You are so much stronger than you give yourself credit for.
+        I see it every day, even when you don't.
+        Go show Disneyland what you're made of. 🏰
+      </p>
+
+      <p>
+        I hope every single day over there is filled with happiness, Tonnam.
+        You deserve every bit of it. 💗
+      </p>
+
+      <p>
+        <em>I'll be right here, waiting for you. Until June 16.</em>
+      </p>
+
+    </div>
+
+    <p class="letter-sign">All my love,<br>always yours 🌸</p>
+  </div>
+</div>
+
+
+<!-- =============================================
+     COUNTDOWN
+============================================= -->
+<div class="section">
+  <div class="divider"></div>
+  <div class="countdown-section reveal" style="text-align:center;">
+    <p class="section-label">counting every day</p>
+    <h2 class="section-title">Until I see you again 🗓️</h2>
+
+    <!-- Countdown target: change the date below if needed -->
+    <!-- Format: "MONTH DAY, YEAR" — e.g. "June 1, 2025" -->
+    <div class="countdown-grid" id="countdown">
+      <div class="countdown-box">
+        <div class="countdown-number" id="cd-days">--</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-number" id="cd-hours">--</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-number" id="cd-mins">--</div>
+        <div class="countdown-label">Mins</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-number" id="cd-secs">--</div>
+        <div class="countdown-label">Secs</div>
+      </div>
+    </div>
+
+    <p class="countdown-message">Every second is one second closer to you. 💕</p>
+  </div>
+</div>
+
+
+<!-- =============================================
+     TIME ZONES
+============================================= -->
+<div class="section">
+  <div class="divider"></div>
+  <div class="timezone-section reveal">
+    <p class="section-label">we're always together</p>
+    <h2 class="section-title">Same sky, different time 🌏</h2>
+
+    <div class="timezone-cards">
+      <div class="tz-card">
+        <div class="tz-flag">🇹🇭</div>
+        <div class="tz-city">Thailand</div>
+        <div class="tz-time" id="tz-thai">--:--</div>
+        <div class="tz-date" id="tz-thai-date">---</div>
+      </div>
+
+      <div class="tz-card">
+        <div class="tz-flag">🏰</div>
+        <div class="tz-city">California</div>
+        <div class="tz-time" id="tz-ca">--:--</div>
+        <div class="tz-date" id="tz-ca-date">---</div>
+      </div>
+    </div>
+
+    <p style="font-size:0.8rem; color:var(--text-soft); text-align:center; margin-top:1rem; line-height:1.5;">
+      Whenever you look at the sky, remember I'm looking at the same one. 🌙
+    </p>
+  </div>
+</div>
+
+
+<!-- =============================================
+     PHOTO GALLERY
+     ✏️ Replace the src="" values with your photo file paths.
+     Save your photos in the same folder as this HTML file,
+     then change src="photo1.jpg" etc. to match your filenames.
+============================================= -->
+<div class="section">
+  <div class="divider"></div>
+  <div class="gallery-section reveal">
+    <p class="section-label">our little world</p>
+    <h2 class="section-title">Us 📸</h2>
+
+    <div class="gallery-grid">
+
+      <!-- Photo 1 — replace src with your image filename -->
+      <div class="polaroid">
+        <img src="photo1.jpg" alt="us together" onerror="this.src='https://placehold.co/400x400/ffd6e0/e07090?text=📸'" />
+      </div>
+
+      <!-- Photo 2 — replace src with your image filename -->
+      <div class="polaroid">
+        <img src="photo2.jpg" alt="a memory" onerror="this.src='https://placehold.co/400x400/ffeaf2/f4a0b5?text=📸'" />
+      </div>
+
+      <!-- Photo 3 — replace src with your image filename -->
+      <div class="polaroid">
+        <img src="photo3.jpg" alt="a memory" onerror="this.src='https://placehold.co/400x400/ffe4ec/e07090?text=📸'" />
+      </div>
+
+      <!-- Photo 4 — replace src with your image filename -->
+      <div class="polaroid">
+        <img src="photo4.png" alt="a memory" onerror="this.src='https://placehold.co/400x400/fff0f4/f4a0b5?text=📸'" />
+      </div>
+
+      <!-- Photo 5 — replace src with your image filename -->
+      <div class="polaroid">
+        <img src="photo5.png" alt="a memory" onerror="this.src='https://placehold.co/400x400/ffd6e0/e07090?text=📸'" />
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================
+     SURPRISE BUTTON
+============================================= -->
+<div class="section">
+  <div class="divider"></div>
+  <div class="surprise-section reveal">
+    <p class="section-label">just for the hard moments</p>
+    <h2 class="section-title">A little hug 🤗</h2>
+
+    <button class="surprise-btn" onclick="openSurprise(this)">
+      Open when you miss me 💌
+    </button>
+
+    <!-- Hidden message — revealed on click -->
+    <div class="surprise-message" id="surprise-msg">
+      <div class="surprise-heart">🫶</div>
+      <p class="surprise-text">
+        You are the prettiest girl in the world. 💗
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================
+     FOOTER
+============================================= -->
+<footer class="footer">
+  <div class="divider"></div>
+  <div class="footer-heart">💗</div>
+</footer>
+
+
+<!-- =============================================
+     JAVASCRIPT
+============================================= -->
+<script>
+  /* ---- COUNTDOWN ----
+     ✏️ Change the target date here (format: "Month Day, Year HH:MM:SS")
+     Currently set to June 1, 2025 midnight Thailand time.
+  */
+  const RETURN_DATE = new Date("June 16, 2025 00:00:00");
+
+  function updateCountdown() {
+    const now  = new Date();
+    const diff = RETURN_DATE - now;
+
+    if (diff <= 0) {
+      document.getElementById("cd-days").textContent  = "0";
+      document.getElementById("cd-hours").textContent = "0";
+      document.getElementById("cd-mins").textContent  = "0";
+      document.getElementById("cd-secs").textContent  = "0";
+      return;
+    }
+
+    const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById("cd-days").textContent  = String(days).padStart(2, "0");
+    document.getElementById("cd-hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("cd-mins").textContent  = String(mins).padStart(2, "0");
+    document.getElementById("cd-secs").textContent  = String(secs).padStart(2, "0");
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+
+  /* ---- TIMEZONES ---- */
+  function formatTime(date, tz) {
+    return date.toLocaleTimeString("en-US", {
+      timeZone: tz,
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
+  }
+
+  function formatDate(date, tz) {
+    return date.toLocaleDateString("en-US", {
+      timeZone: tz,
+      weekday: "short",
+      month: "short",
+      day: "numeric"
+    });
+  }
+
+  function updateClocks() {
+    const now = new Date();
+    document.getElementById("tz-thai").textContent      = formatTime(now, "Asia/Bangkok");
+    document.getElementById("tz-thai-date").textContent = formatDate(now, "Asia/Bangkok");
+    document.getElementById("tz-ca").textContent        = formatTime(now, "America/Los_Angeles");
+    document.getElementById("tz-ca-date").textContent   = formatDate(now, "America/Los_Angeles");
+  }
+
+  setInterval(updateClocks, 1000);
+  updateClocks();
+
+
+  /* ---- SURPRISE BUTTON ---- */
+  function openSurprise(btn) {
+    const msg = document.getElementById("surprise-msg");
+    if (msg.classList.contains("open")) {
+      msg.classList.remove("open");
+      btn.textContent = "Open when you miss me 💌";
+    } else {
+      msg.classList.add("open");
+      btn.textContent = "Close 🌸";
+      spawnHeartBurst();
+    }
+  }
+
+
+  /* ---- SCROLL REVEAL ---- */
+  const reveals = document.querySelectorAll(".reveal");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+
+
+  /* ---- FLOATING HEARTS CANVAS ---- */
+  const canvas = document.getElementById("hearts-canvas");
+  const ctx    = canvas.getContext("2d");
+  let hearts   = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  function Heart() {
+    this.reset = function() {
+      this.x     = Math.random() * canvas.width;
+      this.y     = canvas.height + 20;
+      this.size  = Math.random() * 14 + 8;
+      this.speed = Math.random() * 0.6 + 0.3;
+      this.drift = (Math.random() - 0.5) * 0.5;
+      this.alpha = Math.random() * 0.4 + 0.15;
+      this.sway  = Math.random() * Math.PI * 2;
+    };
+    this.reset();
+    this.y = Math.random() * canvas.height; // scatter initial positions
+  }
+
+  for (let i = 0; i < 22; i++) hearts.push(new Heart());
+
+  function drawHeart(x, y, size, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle   = "#f4a0b5";
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.bezierCurveTo(x, y - size / 3, x - size / 2, y - size, x - size, y - size / 1.5);
+    ctx.bezierCurveTo(x - size * 1.5, y - size * 1.5, x - size * 1.5, y - size / 3, x, y + size / 1.5);
+    ctx.bezierCurveTo(x + size * 1.5, y - size / 3, x + size * 1.5, y - size * 1.5, x + size, y - size / 1.5);
+    ctx.bezierCurveTo(x + size / 2, y - size, x, y - size / 3, x, y);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function animateHearts() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hearts.forEach(h => {
+      h.sway += 0.01;
+      h.x    += Math.sin(h.sway) * 0.5 + h.drift;
+      h.y    -= h.speed;
+      if (h.y < -30) h.reset();
+      drawHeart(h.x, h.y, h.size, h.alpha);
+    });
+    requestAnimationFrame(animateHearts);
+  }
+  animateHearts();
+
+  /* Burst of hearts when surprise is opened */
+  function spawnHeartBurst() {
+    for (let i = 0; i < 12; i++) {
+      const h = new Heart();
+      h.x     = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
+      h.y     = window.innerHeight / 2;
+      h.speed = Math.random() * 2 + 1;
+      h.alpha = 0.7;
+      h.size  = Math.random() * 12 + 10;
+      hearts.push(h);
+    }
+    setTimeout(() => { hearts.splice(-12, 12); }, 4000);
+  }
+</script>
+
+</body>
+</html>
